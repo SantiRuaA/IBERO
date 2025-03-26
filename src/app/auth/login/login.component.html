@@ -1,0 +1,54 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <a (click)="goBack()" title="Volver atrás" class="back-link">
+      <mat-icon class="flecha-atras">arrow_back</mat-icon>
+    </a>
+    <div class="fadeIn first">
+      <img class="img" src="../../../assets/img/logo_sena-verde.png" id="icon" alt="" />
+    </div>
+    <br>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)">
+      <div class="fadeIn second">
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input formControlName="correoUsuario" type="email" matInput placeholder="Ingresa tu email" [ngClass]="{
+                'is-invalid': loginForm.get('correoUsuario')?.invalid,
+                'is-valid': loginForm.get('correoUsuario')?.valid
+              }">
+          <mat-icon matSuffix color="primary">person</mat-icon>
+          <mat-error *ngIf="loginForm.get('correoUsuario')?.errors?.['pattern']">
+            El correo necesita un &#64;
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="fadeIn third">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input formControlName="contrasenaUsuario" matInput placeholder="Ingresa tu contraseña" [ngClass]="{
+                  'is-invalid': loginForm.get('contrasenaUsuario')?.invalid,
+                  'is-valid': loginForm.get('contrasenaUsuario')?.valid
+                }" [type]="showPassword ? 'text' : 'password'">
+            <mat-icon matSuffix (click)="togglePasswordVisibility()" [color]="'primary'">
+              {{ showPassword ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+          </mat-form-field><br>
+          <a href="javascript:void(0);" (click)="openForgotPasswordDialog($event)">
+            <span>¿Olvidaste la contraseña?</span>
+          </a>
+        </p>
+      </div>
+
+      <div class="login-button">
+        <button type="submit" class="fadeIn fourth">Iniciar sesión</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,144 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner class="green-spinner"></mat-spinner>
+  </div>
+</div>
+
+<app-navigation/>
+<div class="container">
+  <br>
+  <h2>Crear Tutor</h2>
+  <br>
+  <div class="container">
+    <form [formGroup]="newForm" (ngSubmit)="postForm(newForm.value)">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="idTipoDocumento">Tipo de documento <b style="color: red;">*</b></label>
+            <mat-select class="form-control" formControlName="idTipoDocumento" placeholder="---SELECCIONE---"
+                [ngClass]="{
+                  'is-invalid': newForm.get('idTipoDocumento')?.invalid && newForm.get('idTipoDocumento')?.touched,
+                  'is-valid': newForm.get('idTipoDocumento')?.valid
+                }">
+                <mat-option *ngFor="let tipoDocumento of tiposDocumento" [value]="tipoDocumento.idTipoDocumento">
+                  {{ tipoDocumento.nomTipoDocumento }}
+                </mat-option>
+
+              </mat-select>
+              <div *ngIf="newForm.get('idTipoDocumento')?.errors?.['required']" class="invalid-feedback">
+                Este campo es obligatorio.
+              </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">N° de documento<b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="documentoInstructor" [ngClass]="{
+              'is-invalid': newForm.get('documentoInstructor')?.invalid && (newForm.get('documentoInstructor')?.touched || newForm.get('documentoInstructor')?.dirty),
+              'is-valid': newForm.get('documentoInstructor')?.valid
+            }">
+            <div *ngIf="newForm.get('documentoInstructor')?.errors?.['pattern']" class="invalid-feedback">
+              Documento inválido, mínimo 7 y máximo 10 dígitos numéricos.
+            </div>
+            <div *ngIf="newForm.get('documentoInstructor')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Nombre <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="nombreInstructor" [ngClass]="{
+              'is-invalid': newForm.get('nombreInstructor')?.invalid && (newForm.get('nombreInstructor')?.touched || newForm.get('nombreInstructor')?.dirty),
+              'is-valid': newForm.get('nombreInstructor')?.valid
+            }">
+            <div *ngIf="newForm.get('nombreInstructor')?.errors?.['pattern']" class="invalid-feedback">
+              Campo inválido, no se permiten números y máximo 30 caracteres.
+            </div>
+            <div *ngIf="newForm.get('nombreInstructor')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Apellidos <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="apellidoInstructor" [ngClass]="{
+              'is-invalid': newForm.get('apellidoInstructor')?.invalid && (newForm.get('apellidoInstructor')?.touched || newForm.get('apellidoInstructor')?.dirty),
+              'is-valid': newForm.get('apellidoInstructor')?.valid
+            }">
+            <div *ngIf="newForm.get('apellidoInstructor')?.errors?.['pattern']" class="invalid-feedback">
+              Campo inválido, no se permiten números y máximo 30 caracteres.
+            </div>
+            <div *ngIf="newForm.get('apellidoInstructor')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Teléfono <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="telefonoInstructor" [ngClass]="{
+              'is-invalid': newForm.get('telefonoInstructor')?.invalid && (newForm.get('telefonoInstructor')?.touched || newForm.get('telefonoInstructor')?.dirty),
+              'is-valid': newForm.get('telefonoInstructor')?.valid
+            }">
+            <div *ngIf="newForm.get('telefonoInstructor')?.errors?.['pattern']" class="invalid-feedback">
+              Teléfono inválido, debe contener minimo 10 maximo 15 dígitos numéricos.
+            </div>
+            <div *ngIf="newForm.get('telefonoInstructor')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Correo <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="correoInstructor" [ngClass]="{
+              'is-invalid': newForm.get('correoInstructor')?.invalid && (newForm.get('correoInstructor')?.touched || newForm.get('correoInstructor')?.dirty),
+              'is-valid': newForm.get('correoInstructor')?.valid
+            }">
+            <div *ngIf="newForm.get('correoInstructor')?.errors?.['maxlength']" class="invalid-feedback">
+              Campo inválido, máximo 55 caracteres.
+            </div>
+            <div *ngIf="newForm.get('correoInstructor')?.errors?.['pattern']" class="invalid-feedback">
+              Correo inválido.
+            </div>
+
+            <div *ngIf="newForm.get('correoInstructor')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Tipo de Tutor <b style="color: red;">*</b></label>
+            <mat-select class="form-control" formControlName="idTipoInstructor" placeholder="---SELECCIONE---"
+                [ngClass]="{
+                  'is-invalid': newForm.get('idTipoInstructor')?.invalid && newForm.get('idTipoInstructor')?.touched,
+                  'is-valid': newForm.get('idTipoInstructor')?.valid
+                }">
+                <mat-option *ngFor="let tipoInstructor of tiposInstructor" [value]="tipoInstructor.idTipoInstructor">
+                  {{ tipoInstructor.nomTipoInstructor}}
+                </mat-option>
+
+              </mat-select>
+              <div *ngIf="newForm.get('idTipoInstructor')?.errors?.['required']" class="invalid-feedback">
+                Este campo es obligatorio.
+              </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      
+      <button type="button" mat-raised-button class="btn-cancelar" color="accent" (click)="goBack()">Cancelar</button> |
+
+      <button type="submit" mat-raised-button class="btn-guardar" color="primary" [disabled]="newForm.invalid"><span class="btn-color">Guardar</span></button>
+    </form>
+  </div>
+</div>

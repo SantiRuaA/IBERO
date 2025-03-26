@@ -1,0 +1,85 @@
+.btn-nuevo {
+    margin-top: 20px;
+    background-color: #39A900;
+  }
+  
+  h1 {
+    font-weight: bold;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .button-container button {
+    flex: 1;
+  }
+  
+  .align-center {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon-text {
+    margin-left: 5px;
+  }
+
+  .mat-cell {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }  
+  
+  .max-width-cell {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .pdf-button, .excel-button {
+    white-space: nowrap;
+    font-size: 14px;
+    min-width: 120px;
+  }
+
+  .spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  
+  .spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+  }
+  
+  ::ng-deep .green-spinner circle {
+    stroke: green;
+  }
+
+  br{
+    user-select: none;
+  }
+
+  @media screen and (max-width: 777px) {
+    .row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+  }
+  .white-text {
+    color: white;
+  }

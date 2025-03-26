@@ -1,0 +1,49 @@
+<p>
+  <mat-toolbar color="primary" >
+    <div class="logo-container">
+      <div (click)="Info()">
+        <img src="../../../assets/img/logo-sena-blanco.png" alt="Logo" class="logo">
+      </div>
+    </div>
+    <span class="sra" (click)="Info()" matTooltip="Sistema de registro académico"> SRA </span>
+    <span class="example-spacer"></span>
+    <button mat-button (click)="Instructor()">
+      <span class="color-span">Tutores</span>
+    </button>
+
+    <button mat-button matTooltip="Resultados de aprendizaje" (click)="Rda()">
+      <span class="color-span">Saberes</span>
+    </button>
+
+    <!--<button class="menu1" mat-button (click)="Competencia()">
+      <span class="color-span">Competencia</span>
+    </button>
+
+    <button class="menu1" mat-button (click)="Programa()">
+      <span class="color-span">Programa</span>
+    </button>
+
+    <button class="menu1" mat-button (click)="Programacion()">
+      <span class="color-span">Programación</span>
+    </button>
+
+    <button class="menu2" mat-button  (click)="Info()">
+      <span class="color-span">Prog-instructor</span>
+    </button> -->
+
+  
+    <button mat-icon-button aria-label="Usuario" [matMenuTriggerFor]="userMenu">
+      <mat-icon class="color-span">account_circle</mat-icon>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="cambiarPWD()">
+        <mat-icon>manage_accounts</mat-icon>
+        Cambiar contraseña</button>
+      <button mat-menu-item (click)="logOut()">
+        <mat-icon>logout</mat-icon>
+        Cerrar sesión
+      </button>
+    </mat-menu>
+
+  </mat-toolbar>
+</p>

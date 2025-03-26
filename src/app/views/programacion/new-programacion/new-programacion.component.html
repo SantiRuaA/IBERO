@@ -1,0 +1,342 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner class="green-spinner"></mat-spinner>
+  </div>
+</div>
+
+<app-navigation />
+<div class="container">
+  <br>
+  <h2>Registrar programación</h2>
+  <br>
+  <div class="container">
+    <form [formGroup]="newForm" (ngSubmit)="postForm(newForm.value)">
+      <div class="row" *ngIf="mostrarPrimeraParte">
+        <h3>Ficha</h3>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Numero de ficha <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="numeroFicha" [ngClass]="{
+              'is-invalid': newForm.get('numeroFicha')?.invalid && (newForm.get('numeroFicha')?.touched || newForm.get('numeroFicha')?.dirty),
+              'is-valid': newForm.get('numeroFicha')?.valid
+            }">
+            <div *ngIf="newForm.get('numeroFicha')?.errors?.['pattern']" class="invalid-feedback">
+              Campo inválido, mínimo 7 y máximo 10 caracteres numéricos.
+            </div>
+            <div *ngIf="newForm.get('numeroFicha')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Etapa ficha <b style="color: red;">*</b></label>
+            <mat-select type="text" class="form-control" formControlName="idEtapaFicha" [ngClass]="{
+              'is-invalid': newForm.get('idEtapaFicha')?.invalid && newForm.get('idEtapaFicha')?.touched,
+              'is-valid': newForm.get('idEtapaFicha')?.valid
+            }">
+              <mat-option *ngFor="let element of etapasFicha" [value]="element.idEtapaFicha">
+                {{ element.nomEtapa }}
+              </mat-option>
+            </mat-select>
+            <div *ngIf="newForm.get('idEtapaFicha')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Tipo de oferta <b style="color: red;">*</b></label>
+            <mat-select type="text" class="form-control" formControlName="idTipoOferta" [ngClass]="{
+              'is-invalid': newForm.get('idTipoOferta')?.invalid && newForm.get('idTipoOferta')?.touched,
+              'is-valid': newForm.get('idTipoOferta')?.valid
+            }">
+              <mat-option *ngFor="let element of tiposOferta" [value]="element.idTipoOferta">
+                {{ element.nomTipoOferta }}
+              </mat-option>
+            </mat-select>
+            <div *ngIf="newForm.get('idTipoOferta')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Modalidad <b style="color: red;">*</b></label>
+            <mat-select type="text" class="form-control" formControlName="idModalidad" [ngClass]="{
+              'is-invalid': newForm.get('idModalidad')?.invalid && newForm.get('idModalidad')?.touched,
+              'is-valid': newForm.get('idModalidad')?.valid
+            }">
+              <mat-option *ngFor="let element of modalidades" [value]="element.idModalidad">
+                {{ element.nomModalidad || 'NULL' }}
+              </mat-option>
+            </mat-select>
+            <div *ngIf="newForm.get('idModalidad')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Duración de ficha</label>
+            <input type="text" class="form-control" formControlName="duracionFicha" [ngClass]="{
+              'is-invalid': newForm.get('duracionFicha')?.invalid && (newForm.get('duracionFicha')?.touched || newForm.get('duracionFicha')?.dirty),
+              'is-valid': newForm.get('duracionFicha')?.touched || newForm.get('duracionFicha')?.dirty 
+            }">
+            <div *ngIf="newForm.get('duracionFicha')?.errors?.['pattern']" class="invalid-feedback">
+              Campo inválido, máximo 20 caracteres.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Aprendices matriculados</label>
+            <input type="text" class="form-control" formControlName="cantidadAprendices" [ngClass]="{
+              'is-invalid': newForm.get('cantidadAprendices')?.invalid && (newForm.get('cantidadAprendices')?.touched || newForm.get('cantidadAprendices')?.dirty),
+              'is-valid': newForm.get('cantidadAprendices')?.touched || newForm.get('cantidadAprendices')?.dirty 
+            }">
+            <div *ngIf="newForm.get('cantidadAprendices')?.errors?.['pattern']" class="invalid-feedback">
+              Campo inválido, máximo 3 caracteres numéricos.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" mat-raised-button color="accent" (click)="goBack()"
+        *ngIf="mostrarPrimeraParte">Cancelar</button>
+        <span *ngIf="mostrarPrimeraParte"> | </span>
+      <button type="submit" mat-raised-button color="primary" (click)="mostrarSegundaParteFormulario()"
+        *ngIf="mostrarPrimeraParte" [disabled]="validarSegundaParteFormulario()"><span class="btn-color">Siguiente</span></button>
+
+      <div class="row" *ngIf="mostrarSegundaParte">
+
+        <h3>Programación</h3>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for=""> Nombre del programa <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" placeholder="Seleccione un programa" matInput
+              [matAutocomplete]="auto" formControlName="idPrograma" [ngClass]="{
+                  'is-invalid': newForm.get('idPrograma')?.invalid && (newForm.get('idPrograma')?.touched || newForm.get('idPrograma')?.dirty) ||
+                  isNomProgramaInvalid(newForm.get('idPrograma')?.value),
+                  'is-valid': newForm.get('idPrograma')?.valid 
+                }" />
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filterPrograma | async" [value]="option.nomPrograma">
+                <small>{{option.nomPrograma}}</small>
+              </mat-option>
+            </mat-autocomplete>
+            <div *ngIf="newForm.get('idPrograma')?.errors?.['pattern']" class="invalid-feedback">
+              Campo inválido, máximo 100 caracteres.
+            </div>
+            <div *ngIf="newForm.get('idPrograma')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+            <div *ngIf="isNomProgramaInvalid(newForm.get('idPrograma')?.value)" class="invalid">
+              El programa no existe.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for=""> N° doc instructor técnico</label>
+            <input type="text" class="form-control" placeholder="Seleccione un instructor" matInput
+              [matAutocomplete]="auto2" formControlName="idInstructorTecnico" [ngClass]="{
+                  'is-invalid': newForm.get('idInstructorTecnico')?.invalid && (newForm.get('idInstructorTecnico')?.touched || 
+                  newForm.get('idInstructorTecnico')?.dirty) || isDocInstructorTecInvalid(newForm.get('idInstructorTecnico')?.value),
+                  'is-valid': newForm.get('idInstructorTecnico')?.touched || newForm.get('idInstructorTecnico')?.dirty
+                }" />
+            <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+              <mat-option *ngFor="let option of filterInstructorTecnico | async" [value]="option.documentoInstructor">
+                <small>{{option.documentoInstructor}}</small> | <small>{{option.nombreInstructor + ' ' +
+                  option.apellidoInstructor}}</small>
+              </mat-option>
+            </mat-autocomplete>
+            <div *ngIf="newForm.get('idInstructorTecnico')?.errors?.['pattern']" class="invalid-feedback">
+              Documento inválido, mínimo 7 y máximo 10 dígitos numéricos.
+            </div>
+            <div *ngIf="isDocInstructorTecInvalid(newForm.get('idInstructorTecnico')?.value)" class="invalid">
+              El documento no existe.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <div class="form-group">
+            <label for=""> Fecha de inicio de formación </label>
+            <input type="date" class="form-control" formControlName="fechaIniLectiva" [ngClass]="{
+                'is-invalid': newForm.get('fechaIniLectiva')?.invalid && (newForm.get('fechaIniLectiva')?.touched || newForm.get('fechaIniLectiva')?.dirty)
+                || isFechaInvalid( newForm.get('fechaIniLectiva')?.value, newForm.get('fechaIniProductiva')?.value) ||
+                isFechaInvalid( newForm.get('fechaIniLectiva')?.value, newForm.get('fechaFinFormacion')?.value),
+                'is-valid': newForm.get('fechaIniLectiva')?.touched || newForm.get('fechaIniLectiva')?.dirty
+              }" />
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <div class="form-group">
+            <label for="">Fecha de inicio etapa productiva</label>
+            <input type="date" class="form-control" [min]="minFechaIniProductiva" formControlName="fechaIniProductiva"
+              [ngClass]="{
+                'is-invalid': newForm.get('fechaIniProductiva')?.invalid && (newForm.get('fechaIniProductiva')?.touched || newForm.get('fechaIniProductiva')?.dirty)
+                || isFechaInvalid( newForm.get('fechaIniLectiva')?.value, newForm.get('fechaIniProductiva')?.value) ||
+                isFechaInvalid( newForm.get('fechaIniProductiva')?.value, newForm.get('fechaFinFormacion')?.value) ||
+                isFechaInvalid( newForm.get('fechaIniLectiva')?.value, newForm.get('fechaFinFormacion')?.value),
+                'is-valid': newForm.get('fechaIniProductiva')?.touched || newForm.get('fechaIniProductiva')?.dirty
+              }" />
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <div class="form-group">
+            <label for=""> Fecha fin de formación</label>
+            <input type="date" class="form-control" [min]="minFechaFinFormacion" formControlName="fechaFinFormacion"
+              [ngClass]="{
+                'is-invalid': newForm.get('fechaFinFormacion')?.invalid && (newForm.get('fechaFinFormacion')?.touched || newForm.get('fechaFinFormacion')?.dirty)
+                || isFechaInvalid( newForm.get('fechaIniLectiva')?.value, newForm.get('fechaFinFormacion')?.value)
+                || isFechaInvalid( newForm.get('fechaIniProductiva')?.value, newForm.get('fechaFinFormacion')?.value),
+                'is-valid': newForm.get('fechaFinFormacion')?.touched || newForm.get('fechaFinFormacion')?.dirty
+              }" />
+          </div>
+        </div>
+        <div>
+          <div *ngIf="isFechaInvalid( newForm.get('fechaIniLectiva')?.value, newForm.get('fechaIniProductiva')?.value)"
+            class="invalid d-flex justify-content-center">
+            La Fecha de inicio de formación no puede ser mayor a la fecha de inicio etapa productiva.
+          </div>
+          <div *ngIf="isFechaInvalid( newForm.get('fechaIniLectiva')?.value, newForm.get('fechaFinFormacion')?.value)"
+            class="invalid d-flex justify-content-center">
+            La Fecha de inicio de formación no puede ser mayor a la fecha de fin de formación.
+          </div>
+          <div
+            *ngIf="isFechaInvalid( newForm.get('fechaIniProductiva')?.value, newForm.get('fechaFinFormacion')?.value)"
+            class="invalid d-flex justify-content-center">
+            La fecha de inicio etapa productiva no puede ser mayor a la fecha de fin de formación.
+          </div>
+        </div>
+      </div>
+
+      <button type="button" mat-raised-button color="accent" (click)="mostraPrimeraParteFormulario()"
+      *ngIf="mostrarSegundaParte">Atras</button>
+      <span *ngIf="mostrarSegundaParte"> | </span>
+      <button type="submit" mat-raised-button color="primary" (click)="mostrarTerceraParteFormulario()"
+        *ngIf="mostrarSegundaParte" [disabled]="validarTerceraParteFormulario()"><span class="btn-color">Siguiente</span></button>
+
+
+      <div class="row" *ngIf="mostrarTerceraParte">
+        <h3>Competencias del programa
+          {{ getProgramName(newForm.value.idPrograma) }}
+        </h3>
+        <hr>
+        @for (competencia of programacion; track competencia.idProgramaCompetencia) {
+
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+          <h5><strong>{{competencia.nombreCompetencia}}</strong></h5>
+        </div>
+        <br>
+        <br>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 aling-asignar-instructor">
+          <div class="form-group">
+            <label for="">Asignar instructor</label>
+            <input type="text" class="form-control" placeholder="Seleccione un instructor" matInput
+              [matAutocomplete]="auto3" [formControl]="instructorControl"
+              (keyup)="validateDocInstructorCompetencia($event, competencia)" [ngClass]="{
+                'is-invalid': competencia.validateInputInstructor == false,
+                'is-valid': competencia.validateInputInstructor == true
+              }" />
+            <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete">
+              <mat-option *ngFor="let option of filterInstructor | async" [value]="option.documentoInstructor"
+                (onSelectionChange)="asoInstructorCompetencia($event, competencia.idProgramaCompetencia, option.documentoInstructor)">
+                <small>{{option.documentoInstructor}}</small> | <small>{{option.nombreInstructor + ' ' +
+                  option.apellidoInstructor}}</small>
+              </mat-option>
+            </mat-autocomplete>
+            <div class="warning">
+              <p>Favor, seleccionar un instructor.</p>
+            </div>
+            @if(competencia.validateInputInstructor == false){
+            <div class="invalid">
+              Debe seleccionar un instructor.
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <strong class="d-flex justify-content-center">Fecha</strong>
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <div class="form-group">
+                <label for="">Inicio</label>
+                <input type="date" class="form-control" max="{{competencia.fechaFinCompetencia | date:'yyyy-MM-dd'}}"
+                  (change)="addFechaIniCompetencia(competencia.idProgramaCompetencia, $event)" [ngClass]="{
+                    'is-invalid': competencia.validateInputFechaIniCompetencia == false,
+                    'is-valid': competencia.validateInputFechaIniCompetencia 
+                  }">
+              </div>
+            </div>
+
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <div class="form-group">
+                <label for="">Fin</label>
+                <input type="date" class="form-control" min="{{competencia.fechaIniCompetencia | date:'yyyy-MM-dd'}}"
+                  (change)="addFechaFinCompetencia(competencia.idProgramaCompetencia, $event)" [ngClass]="{
+                    'is-invalid': competencia.validateInputFechaFinCompetencia == false,
+                    'is-valid': competencia.validateInputFechaFinCompetencia 
+                  }">
+              </div>
+            </div>
+            @if (competencia.fechaIniCompetencia > competencia.fechaFinCompetencia) {
+            <div class="invalid d-flex justify-content-center">
+              La fecha de inicio no puede ser mayor a la fecha de fin.
+            </div>
+            }
+          </div>
+        </div>
+        <hr>
+
+        } @empty {
+
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+          <h5 class="noProgram">FAVOR, SELECCIONAR UN PROGRAMA</h5>
+        </div>
+        <br>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Asignar instructor</label>
+            <input type="text" class="form-control" disabled>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+          <div class="form-group">
+            <label for="">Inicio</label>
+            <input type="date" class="form-control" disabled>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+          <div class="form-group">
+            <label for="">Fin</label>
+            <input type="date" class="form-control" disabled>
+          </div>
+        </div>
+        <hr>
+
+        }
+
+      </div>
+
+      <button type="button" mat-raised-button color="accent" (click)="confirmarMostrarSegundaParteFormulario()"
+      *ngIf="mostrarTerceraParte">Atras</button>
+      <span *ngIf="mostrarTerceraParte"> | </span>
+      <button type="submit" mat-raised-button color="primary" *ngIf="mostrarTerceraParte" 
+      [disabled]="newForm.invalid || programacion.length < 1 || !errorFechaCompetencia || !errorInstructorCompetencia || 
+        isDocInstructorTecInvalid(newForm.get('idInstructorTecnico')?.value) || isNomProgramaInvalid(newForm.get('idPrograma')?.value) ||
+        isFechaInvalid( newForm.get('fechaIniLectiva')?.value, newForm.get('fechaIniProductiva')?.value) ||
+        isFechaInvalid( newForm.get('fechaIniLectiva')?.value, newForm.get('fechaFinFormacion')?.value) ||
+        isFechaInvalid( newForm.get('fechaIniProductiva')?.value, newForm.get('fechaFinFormacion')?.value)
+      "><span class="btn-color">Guardar</span></button>
+    </form>
+  </div>
+</div>

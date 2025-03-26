@@ -1,0 +1,4 @@
+@import "./assets/scss/themes.scss";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Calibri, sans-serif; background-color: #F2F2F2; }

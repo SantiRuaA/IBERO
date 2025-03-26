@@ -1,0 +1,345 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner class="green-spinner"></mat-spinner>
+  </div>
+</div>
+
+<app-navigation />
+<div class="container">
+  <br>
+  <h2>Editar programación</h2>
+  <br>
+  <div class="container">
+    <form [formGroup]="editForm" (ngSubmit)="postForm(editForm.value)">
+      <div class="row" *ngIf="mostrarPrimeraParte">
+        <h3>Ficha</h3>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Numero de ficha <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="numeroFicha" >
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Etapa ficha <b style="color: red;">*</b></label>
+            <mat-select type="text" class="form-control" formControlName="idEtapaFicha" [ngClass]="{
+              'is-invalid': editForm.get('idEtapaFicha')?.invalid && editForm.get('idEtapaFicha')?.touched,
+              'is-valid': editForm.get('idEtapaFicha')?.valid
+            }">
+              <mat-option *ngFor="let element of etapasFicha" [value]="element.idEtapaFicha">
+                {{ element.nomEtapa }}
+              </mat-option>
+            </mat-select>
+            <div *ngIf="editForm.get('idEtapaFicha')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Tipo de oferta <b style="color: red;">*</b></label>
+            <mat-select type="text" class="form-control" formControlName="idTipoOferta" [ngClass]="{
+              'is-invalid': editForm.get('idTipoOferta')?.invalid && editForm.get('idTipoOferta')?.touched,
+              'is-valid': editForm.get('idTipoOferta')?.valid
+            }">
+              <mat-option *ngFor="let element of tiposOferta" [value]="element.idTipoOferta">
+                {{ element.nomTipoOferta }}
+              </mat-option>
+            </mat-select>
+            <div *ngIf="editForm.get('idTipoOferta')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Modalidad <b style="color: red;">*</b></label>
+            <mat-select type="text" class="form-control" formControlName="idModalidad" [ngClass]="{
+              'is-invalid': editForm.get('idModalidad')?.invalid && editForm.get('idModalidad')?.touched,
+              'is-valid': editForm.get('idModalidad')?.valid
+            }">
+              <mat-option *ngFor="let element of modalidades" [value]="element.idModalidad">
+                {{ element.nomModalidad }}
+              </mat-option>
+            </mat-select>
+            <div *ngIf="editForm.get('idModalidad')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Duración de ficha</label>
+            <input type="text" class="form-control" formControlName="duracionFicha" [ngClass]="{
+              'is-invalid': editForm.get('duracionFicha')?.invalid && (editForm.get('duracionFicha')?.touched || editForm.get('duracionFicha')?.dirty),
+              'is-valid': editForm.get('duracionFicha')?.valid
+            }">
+            <div *ngIf="editForm.get('duracionFicha')?.errors?.['pattern']" class="invalid-feedback">
+              Campo inválido, máximo 20 caracteres.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Aprendices matriculados</label>
+            <input type="text" class="form-control" formControlName="cantidadAprendices" [ngClass]="{
+              'is-invalid': editForm.get('cantidadAprendices')?.invalid && (editForm.get('cantidadAprendices')?.touched || editForm.get('cantidadAprendices')?.dirty)
+              || isAprendicesInvalid(editForm.get('cantidadAprendices')?.value, editForm.get('retiroAprendices')?.value),
+              'is-valid': editForm.get('cantidadAprendices')?.valid
+            }">
+            <div *ngIf="editForm.get('cantidadAprendices')?.errors?.['pattern']" class="invalid-feedback">
+              Campo inválido, máximo 3 caracteres numéricos.
+            </div>
+            <div *ngIf="isAprendicesInvalid(editForm.get('cantidadAprendices')?.value, editForm.get('retiroAprendices')?.value)" class="invalid-feedback">
+              La cantidad de aprendices retirados no puede ser mayor a la cantidad de aprendices.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Aprendices retirados</label>
+            <input type="text" class="form-control" formControlName="retiroAprendices" [ngClass]="{
+              'is-invalid': editForm.get('retiroAprendices')?.invalid && (editForm.get('retiroAprendices')?.touched || editForm.get('retiroAprendices')?.dirty)
+              || isAprendicesInvalid(editForm.get('cantidadAprendices')?.value, editForm.get('retiroAprendices')?.value),
+              'is-valid': editForm.get('retiroAprendices')?.valid
+            }">
+            <div *ngIf="editForm.get('retiroAprendices')?.errors?.['pattern']" class="invalid-feedback">
+              Campo inválido, máximo 3 caracteres numéricos.
+            </div>
+            <div *ngIf="isAprendicesInvalid(editForm.get('cantidadAprendices')?.value, editForm.get('retiroAprendices')?.value)" class="invalid-feedback">
+              La cantidad de aprendices retirados no puede ser mayor a la cantidad de aprendices.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Aprendices activos</label>
+            <input type="text" class="form-control" formControlName="aprendicesActivos">
+          </div>
+        </div>
+      </div>
+
+      <button type="button" mat-raised-button color="accent" (click)="goBack()"
+      *ngIf="mostrarPrimeraParte">Cancelar</button>
+      <span *ngIf="mostrarPrimeraParte"> | </span>
+    <button type="submit" mat-raised-button color="primary" (click)="mostrarSegundaParteFormulario()"
+      *ngIf="mostrarPrimeraParte" [disabled]="validarSegundaParteFormulario()"><span class="btn-color">Siguiente</span></button>
+
+      <div class="row" *ngIf="mostrarSegundaParte">
+
+        <h3>Programación</h3>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for=""> Nombre del programa <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="idPrograma">
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for=""> N° doc instructor técnico</label>
+            <input type="text" class="form-control" placeholder="Seleccione un instructor" matInput
+              [matAutocomplete]="auto2" formControlName="idInstructorTecnico" [ngClass]="{
+                  'is-invalid': editForm.get('idInstructorTecnico')?.invalid && (editForm.get('idInstructorTecnico')?.touched || 
+                  editForm.get('idInstructorTecnico')?.dirty) || isDocInstructorTecInvalid(editForm.get('idInstructorTecnico')?.value),
+                  'is-valid': editForm.get('idInstructorTecnico')?.valid
+                }" />
+            <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+              <mat-option *ngFor="let option of filterInstructorTecnico | async" [value]="option.documentoInstructor">
+                <small>{{option.documentoInstructor}}</small> | <small>{{option.nombreInstructor + ' ' +
+                  option.apellidoInstructor}}</small>
+              </mat-option>
+            </mat-autocomplete>
+            <div *ngIf="editForm.get('idInstructorTecnico')?.errors?.['pattern']" class="invalid-feedback">
+              Documento inválido, mínimo 7 y máximo 10 dígitos numéricos.
+            </div>
+            <div *ngIf="isDocInstructorTecInvalid(editForm.get('idInstructorTecnico')?.value)" class="invalid">
+              El documento no existe.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <div class="form-group">
+            <label for=""> Fecha de inicio de formación</label>
+            <input type="date" class="form-control" formControlName="fechaIniLectiva" [ngClass]="{
+                'is-invalid': editForm.get('fechaIniLectiva')?.invalid && (editForm.get('fechaIniLectiva')?.touched || editForm.get('fechaIniLectiva')?.dirty)
+                || isFechaInvalid( editForm.get('fechaIniLectiva')?.value, editForm.get('fechaIniProductiva')?.value) ||
+                isFechaInvalid( editForm.get('fechaIniLectiva')?.value, editForm.get('fechaFinFormacion')?.value),
+                'is-valid': editForm.get('fechaIniLectiva')?.valid
+              }" />
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <div class="form-group">
+            <label for="">Fecha de inicio etapa productiva</label>
+            <input type="date" class="form-control" [min]="minFechaIniProductiva" formControlName="fechaIniProductiva"
+              [ngClass]="{
+                'is-invalid': editForm.get('fechaIniProductiva')?.invalid && (editForm.get('fechaIniProductiva')?.touched || editForm.get('fechaIniProductiva')?.dirty)
+                || isFechaInvalid( editForm.get('fechaIniLectiva')?.value, editForm.get('fechaIniProductiva')?.value) ||
+                isFechaInvalid(editForm.get('fechaIniProductiva')?.value, editForm.get('fechaFinFormacion')?.value) ||
+                isFechaInvalid( editForm.get('fechaIniLectiva')?.value, editForm.get('fechaFinFormacion')?.value),
+                'is-valid': editForm.get('fechaIniProductiva')?.valid
+              }" />
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <div class="form-group">
+            <label for=""> Fecha fin de formación</label>
+            <input type="date" class="form-control" [min]="minFechaFinFormacion" formControlName="fechaFinFormacion"
+              [ngClass]="{
+                'is-invalid': editForm.get('fechaFinFormacion')?.invalid && (editForm.get('fechaFinFormacion')?.touched || editForm.get('fechaFinFormacion')?.dirty)
+                || isFechaInvalid( editForm.get('fechaIniLectiva')?.value, editForm.get('fechaFinFormacion')?.value)
+                || isFechaInvalid( editForm.get('fechaIniProductiva')?.value, editForm.get('fechaFinFormacion')?.value),
+                'is-valid': editForm.get('fechaFinFormacion')?.valid
+              }" />
+          </div>
+        </div>
+        <div>
+          <div
+            *ngIf="isFechaInvalid( editForm.get('fechaIniLectiva')?.value, editForm.get('fechaIniProductiva')?.value)"
+            class="invalid d-flex justify-content-center">
+            La Fecha de inicio de formación no puede ser mayor a la fecha de inicio etapa productiva.
+          </div>
+          <div *ngIf="isFechaInvalid( editForm.get('fechaIniLectiva')?.value, editForm.get('fechaFinFormacion')?.value)"
+            class="invalid d-flex justify-content-center">
+            La Fecha de inicio de formación no puede ser mayor a la fecha de fin de formación.
+          </div>
+          <div
+            *ngIf="isFechaInvalid( editForm.get('fechaIniProductiva')?.value, editForm.get('fechaFinFormacion')?.value)"
+            class="invalid d-flex justify-content-center">
+            La fecha de inicio etapa productiva no puede ser mayor a la fecha de fin de formación.
+          </div>
+        </div>
+
+      </div>
+
+      <button type="button" mat-raised-button color="accent" (click)="mostraPrimeraParteFormulario()"
+      *ngIf="mostrarSegundaParte">Atras</button>
+      <span *ngIf="mostrarSegundaParte"> | </span>
+      <button type="submit" mat-raised-button color="primary" (click)="mostrarTerceraParteFormulario()"
+        *ngIf="mostrarSegundaParte" [disabled]="validarTerceraParteFormulario()"><span class="btn-color">Siguiente</span></button>
+      <div class="row" *ngIf="mostrarTerceraParte">
+        <h3>Competencias del programa
+          {{ getProgramName(editForm.get('idPrograma')?.value) }}
+        </h3>
+        <hr>
+
+        @for (competencia of programacion; track competencia.idProgramacionCompetencia) {
+
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+          <h5><strong>{{getCompetenciaName(competencia.idCompetencia)}}</strong></h5>
+        </div>
+        <br>
+        <br>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 aling-asignar-instructor">
+          <div class="form-group">
+            <label for="">Asignar instructor</label>
+            <input type="text" class="form-control" placeholder="Seleccione un instructor" matInput
+              [matAutocomplete]="auto3" [value]="competencia.idInstructor"
+              (keyup)="validateDocInstructorCompetencia($event, competencia); filterInstructorCompetencia($event)" [ngClass]="{
+                    'is-invalid': competencia.validateInputInstructor == false,
+                    'is-valid': competencia.validateInputInstructor == true
+                  }" />
+            <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete">
+              <mat-option *ngFor="let option of filterInstructor" [value]="option.documentoInstructor"
+                (onSelectionChange)="asoInstructorCompetencia($event, competencia.idProgramacionCompetencia, option.documentoInstructor)">
+                <small>{{option.documentoInstructor}}</small> | <small>{{option.nombreInstructor + ' ' +
+                  option.apellidoInstructor}}</small>
+              </mat-option>
+            </mat-autocomplete>
+            <div class="warning">
+              <p><strong> Favor, seleccionar un instructor.</strong></p>
+            </div>
+            @if(competencia.validateInputInstructor == false){
+            <div class="invalid">
+              Debe seleccionar un instructor.
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <strong class="d-flex justify-content-center">Fecha</strong>
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <div class="form-group">
+                <label for="">Inicio</label>
+                <input type="date" class="form-control" [value]="competencia.fechaIniCompetencia | date:'yyyy-MM-dd'"
+                  max="{{competencia.fechaFinCompetencia | date:'yyyy-MM-dd'}}" 
+                  (change)="addFechaIniCompetencia(competencia.idProgramacionCompetencia, $event)" [ngClass]="{
+                    'is-invalid': competencia.validateInputFechaIniCompetencia == false,
+                    'is-valid': competencia.validateInputFechaIniCompetencia 
+                  }">
+              </div>
+            </div>
+
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <div class="form-group">
+                <label for="">Fin</label>
+                <input type="date" class="form-control" [value]="competencia.fechaFinCompetencia | date:'yyyy-MM-dd'"
+                  min="{{competencia.fechaIniCompetencia | date:'yyyy-MM-dd'}}" 
+                  (change)="addFechaFinCompetencia(competencia.idProgramacionCompetencia, $event)" [ngClass]="{
+                    'is-invalid': competencia.validateInputFechaFinCompetencia == false,
+                    'is-valid': competencia.validateInputFechaFinCompetencia 
+                  }">
+              </div>
+            </div>
+            @if (competencia.fechaIniCompetencia > competencia.fechaFinCompetencia) {
+            <div class="invalid d-flex justify-content-center">
+              La fecha de inicio no puede ser mayor a la fecha de fin.
+            </div>
+            }
+          </div>
+        </div>
+        <hr>
+
+        } @empty {
+
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+          <h5 class="noProgram">FAVOR, SELECCIONAR UN PROGRAMA</h5>
+        </div>
+        <br>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Asignar instructor</label>
+            <input type="text" class="form-control" disabled>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+          <div class="form-group">
+            <label for="">Inicio</label>
+            <input type="date" class="form-control" disabled>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+          <div class="form-group">
+            <label for="">Fin</label>
+            <input type="date" class="form-control" disabled>
+          </div>
+        </div>
+        <hr>
+
+        }
+
+      </div>
+
+      <button type="button" mat-raised-button color="accent" (click)="confirmarMostrarSegundaParteFormulario()"
+      *ngIf="mostrarTerceraParte">Atras</button>
+      <span *ngIf="mostrarTerceraParte"> | </span>
+      <button type="submit" mat-raised-button color="primary" *ngIf="mostrarTerceraParte"
+      [disabled]="editForm.invalid || programacion.length < 1 || !errorFechaCompetencia || !errorInstructorCompetencia || 
+        isAprendicesInvalid(editForm.get('cantidadAprendices')?.value, editForm.get('retiroAprendices')?.value) ||
+        isDocInstructorTecInvalid(editForm.get('idInstructorTecnico')?.value) ||
+        isFechaInvalid( editForm.get('fechaIniLectiva')?.value, editForm.get('fechaIniProductiva')?.value) ||
+        isFechaInvalid( editForm.get('fechaIniLectiva')?.value, editForm.get('fechaFinFormacion')?.value) ||
+        isFechaInvalid( editForm.get('fechaIniProductiva')?.value, editForm.get('fechaFinFormacion')?.value)
+      "><span class="btn-color">Editar</span></button>
+    </form>
+  </div>
+</div>

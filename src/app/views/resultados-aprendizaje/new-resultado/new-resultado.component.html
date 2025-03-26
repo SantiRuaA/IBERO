@@ -1,0 +1,37 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner class="green-spinner"></mat-spinner>  
+  </div>
+</div>
+
+<app-navigation/>
+
+<div class="container">
+  <br>
+  <h2>Crear Saber</h2>
+  <br>
+  <div class="container">
+    <form [formGroup]="newForm" (ngSubmit)="postForm(newForm.value)">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <div class="form-group">
+            <label for="">Nombre del Saber <b style="color: red;">*</b></label>
+            <textarea type="text" class="form-control" formControlName="nomResultadoAprendizaje" [ngClass]="{
+              'is-invalid': newForm.get('nomResultadoAprendizaje')?.invalid && (newForm.get('nomResultadoAprendizaje')?.touched || newForm.get('nomResultadoAprendizaje')?.dirty),
+              'is-valid': newForm.get('nomResultadoAprendizaje')?.valid
+            }"></textarea>
+            <div *ngIf="newForm.get('nomResultadoAprendizaje')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+            <div *ngIf="newForm.get('nomResultadoAprendizaje')?.errors?.['pattern']" class="invalid-feedback">
+              Campo invalido, máximo 250 caracteres.
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <button type="button" mat-raised-button color="accent" (click)="goBack()">Cancelar</button> |
+      <button type="submit" mat-raised-button color="primary" [disabled]="newForm.invalid"><span class="btn-color">Guardar</span></button>
+    </form>
+  </div>
+</div>

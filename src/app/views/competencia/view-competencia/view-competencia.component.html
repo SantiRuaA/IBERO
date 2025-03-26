@@ -1,0 +1,65 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner class="green-spinner"></mat-spinner>
+  </div>
+</div>
+
+<app-navigation/>
+<div class="container">
+  <br>
+  <h2>Ver competencia</h2>
+  <br>
+  <div class="container">
+    <form [formGroup]="viewForm">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for=""> Nombre de la Competencia </label>
+            <input type="text" class="form-control" formControlName="nombreCompetencia" readonly>
+          </div>
+        </div>
+        
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for=""> Código de la Competencia </label>
+            <input type="text" class="form-control" formControlName="codigoNorma" readonly>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="form-group">
+          <label for=""> Norma </label>
+          <input type="text" class="form-control" formControlName="norma" readonly>
+        </div>
+      </div>
+
+      <hr><br>
+
+      <h3>Resultados de aprendizaje asociados</h3>
+      <br>
+
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="num">
+          <th mat-header-cell *matHeaderCellDef class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2"> No.</th>
+          <td mat-cell *matCellDef="let resultados; let i = index" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">{{ i + 1 }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="nomResultadoAprendizaje">
+          <th mat-header-cell *matHeaderCellDef class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">Resultado Aprendizaje</th>
+          <td mat-cell *matCellDef="let resultados" class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">{{resultados.nomResultadoAprendizaje}}</td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="['num', 'nomResultadoAprendizaje']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['num', 'nomResultadoAprendizaje']"></tr>
+      </table>
+
+      <br>
+      
+      <button type="button" mat-raised-button color="accent" class="btn-cancelar" (click)="goBack()">Volver</button>
+
+    </form>
+  </div>
+</div>

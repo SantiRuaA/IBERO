@@ -1,0 +1,223 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner class="green-spinner"></mat-spinner>
+  </div>
+</div>
+
+<app-navigation/>
+<div class="container">
+  <br>
+  <h2>Crear programa</h2>
+  <br>
+  <div class="container">
+    <form [formGroup]="newForm" (ngSubmit)="postForm(newForm.value)">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for=""> Nombre del programa <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="nomPrograma" [ngClass]="{
+              'is-invalid': newForm.get('nomPrograma')?.invalid && (newForm.get('nomPrograma')?.touched || newForm.get('nomPrograma')?.dirty),
+              'is-valid': newForm.get('nomPrograma')?.valid
+            }">
+            <div *ngIf="newForm.get('nomPrograma')?.errors?.['pattern']" class="invalid-feedback">
+              Campo inválido, máximo 100 caracteres.
+            </div>
+            <div *ngIf="newForm.get('nomPrograma')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for=""> Versión <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="versionPrograma" [ngClass]="{
+              'is-invalid': newForm.get('versionPrograma')?.invalid && (newForm.get('versionPrograma')?.touched || newForm.get('versionPrograma')?.dirty),
+              'is-valid': newForm.get('versionPrograma')?.valid
+            }">
+            <div *ngIf="newForm.get('versionPrograma')?.errors?.['pattern']" class="invalid-feedback">
+              Campo inválido, máximo 2 caracteres numéricos.
+            </div>
+            <div *ngIf="newForm.get('versionPrograma')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for=""> Código <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="codigoPrograma" [ngClass]="{
+              'is-invalid': newForm.get('codigoPrograma')?.invalid && (newForm.get('codigoPrograma')?.touched || newForm.get('codigoPrograma')?.dirty),
+              'is-valid': newForm.get('codigoPrograma')?.valid
+            }">
+            <div *ngIf="newForm.get('codigoPrograma')?.errors?.['pattern']" class="invalid-feedback">
+              Campo invalido, mínimo 6 y máximo 7 caracteres numéricos.
+            </div>
+            <div *ngIf="newForm.get('codigoPrograma')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for=""> Red de conocimiento <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="redConocimiento" [ngClass]="{
+              'is-invalid': newForm.get('redConocimiento')?.invalid && (newForm.get('redConocimiento')?.touched || newForm.get('redConocimiento')?.dirty),
+              'is-valid': newForm.get('redConocimiento')?.valid
+            }">
+            <div *ngIf="newForm.get('redConocimiento')?.errors?.['pattern']" class="invalid-feedback">
+              Campo invalido, maximo 100 caracteres.
+            </div>
+            <div *ngIf="newForm.get('redConocimiento')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Nivel de formación <b style="color: red;">*</b></label>
+            <mat-select type="text" class="form-control" formControlName="idNivelFormacion" [ngClass]="{
+              'is-invalid': newForm.get('idNivelFormacion')?.invalid && (newForm.get('idNivelFormacion')?.touched),
+              'is-valid': newForm.get('idNivelFormacion')?.valid
+            }">
+              <mat-option *ngFor="let element of nivelesFormacion" [value]="element.idNivelFormacion">
+                {{ element.nomNivelFormacion }}</mat-option>
+            </mat-select>
+            <div *ngIf="newForm.get('idNivelFormacion')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for=""> Codigo del Proyecto <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="codProyecto" [ngClass]="{
+              'is-invalid': newForm.get('codProyecto')?.invalid && (newForm.get('codProyecto')?.touched || newForm.get('codProyecto')?.dirty),
+              'is-valid': newForm.get('codProyecto')?.valid
+            }">
+            <div *ngIf="newForm.get('codProyecto')?.errors?.['pattern']" class="invalid-feedback">
+              Campo invalido, mínimo 1 y máximo 7 caracteres numéricos.
+            </div>
+            <div *ngIf="newForm.get('codProyecto')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <div class="form-group">
+            <label for=""> Proyecto <b style="color: red;">*</b></label>
+            <textarea type="text" class="form-control" formControlName="proyecto" [ngClass]="{
+              'is-invalid': newForm.get('proyecto')?.invalid && (newForm.get('proyecto')?.touched || newForm.get('proyecto')?.dirty),
+              'is-valid': newForm.get('proyecto')?.valid
+            }"> </textarea>
+            <div *ngIf="newForm.get('proyecto')?.errors?.['pattern']" class="invalid-feedback">
+              Campo invalido, maximo 100 caracteres.
+            </div>
+            <div *ngIf="newForm.get('proyecto')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr><br>
+      <h3> Asociar Competencias</h3>
+      <button type="button" matTooltip="Asociar competencias al programa" mat-raised-button color="primary"
+        (click)="viewDialogCompetencias()" class="btn-openCompetenciasDialog"><span class="btn-color">Agregar</span></button>
+      <br><br>
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="posicion">
+          <th mat-header-cell *matHeaderCellDef class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"> No. </th>
+          <td mat-cell *matCellDef="let element; let i = index" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"> {{
+            i + 1 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="codigo">
+          <th mat-header-cell *matHeaderCellDef class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2"> Código </th>
+          <td mat-cell *matCellDef="let element" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+            {{element.codigoNorma}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef class="col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xl-7"> Nombre </th>
+          <td mat-cell *matCellDef="let element" class="col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xl-7">
+            {{element.nombreCompetencia}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"> Acciones </th>
+          <td mat-cell *matCellDef="let element" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+            <button class="btn-removeCompetencia" mat-icon-button title="Remover competencia"
+              (click)="removeCompetencia(element)">
+              <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['posicion', 'codigo', 'nombre', 'acciones']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['posicion', 'codigo', 'nombre', 'acciones']"></tr>
+      </table>
+      
+      <button type="button" mat-raised-button color="accent" (click)="goBack()">Cancelar</button> |
+
+      <button type="submit" mat-raised-button color="primary" 
+        [disabled]="newForm.invalid || competenciasSeleccionadas.length < 1"><span class="btn-color">Guardar</span>
+      </button> 
+    </form>
+  </div>
+</div>
+
+<mat-dialog-content>
+  <ng-template #viewCompetenciasDialog>
+    <div class="dialogData">
+      <div>
+        <h2>Competencias</h2>
+        <mat-icon mat-dialog-close class="cerrar">close</mat-icon>
+      </div>
+      <br>
+      <div>
+        <input type="text" class="form-control" (keyup)="filterCompetencias($event)" #input autocomplete="off">
+        <mat-icon color="primary">search</mat-icon>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+          <h4>No.</h4>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <h4>Código</h4>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+          <h4>Nombre</h4>
+        </div>
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+          <h4>Norma</h4>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+          <h4></h4>
+        </div>
+      </div>
+      <hr>
+      <div class="row" *ngFor="let i of competenciasDialog; let x = index">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+          <p>{{ x + 1 }}</p>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <p class="truncate" title="{{i.codigoNorma}}">{{ i.codigoNorma}}</p>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+          <p class="truncate" title="{{i.nombreCompetencia}}">{{ i.nombreCompetencia}}</p>
+        </div>
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+          <p class="truncate" title="{{i.norma}}">{{ i.norma}}</p>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+          <button class="btn-circle" type="button" title="Agregar competencia" (click)="addCompetencia(i)">
+            <span class="material-icons">add</span>
+          </button>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </ng-template>
+</mat-dialog-content>

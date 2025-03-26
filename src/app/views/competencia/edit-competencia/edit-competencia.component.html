@@ -1,0 +1,154 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner class="green-spinner"></mat-spinner>
+  </div>
+</div>
+
+
+<app-navigation />
+<div class="container">
+  <br>
+  <h2>Editar competencia</h2>
+
+  <br>
+  <div class="container">
+    <form [formGroup]="editForm" (ngSubmit)="postForm(editForm.value)">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for=""> Nombre de la Competencia <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="nombreCompetencia" [ngClass]="{
+            'is-invalid': editForm.get('nombreCompetencia')?.invalid && (editForm.get('nombreCompetencia')?.touched || editForm.get('nombreCompetencia')?.dirty),
+            'is-valid': editForm.get('nombreCompetencia')?.valid
+          }">
+            <div *ngIf="editForm.get('nombreCompetencia')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+            <div *ngIf="editForm.get('nombreCompetencia')?.errors?.['pattern']" class="invalid-feedback">
+              Campo invalido, máximo 250 caracteres.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for=""> Código de la norma <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="codigoNorma" [ngClass]="{
+                'is-invalid': editForm.get('codigoNorma')?.invalid && (editForm.get('codigoNorma')?.touched || editForm.get('codigoNorma')?.dirty),
+                'is-valid': editForm.get('codigoNorma')?.valid
+              }">
+            <div *ngIf="editForm.get('codigoNorma')?.errors?.['pattern']" class="invalid-feedback">
+              Código de norma invalido, minimo 7 y maximo 12 caracteres.
+            </div>
+            <div *ngIf="editForm.get('codigoNorma')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="form-group">
+          <label for=""> Norma <b style="color: red;">*</b></label>
+          <textarea type="text" class="form-control" formControlName="norma" [ngClass]="{
+              'is-invalid': editForm.get('norma')?.invalid && (editForm.get('norma')?.touched || editForm.get('norma')?.dirty),
+              'is-valid': editForm.get('norma')?.valid
+            }"></textarea>
+          <div *ngIf="editForm.get('norma')?.errors?.['required']" class="invalid-feedback">
+            Este campo es obligatorio.
+          </div>
+          <div *ngIf="editForm.get('norma')?.errors?.['pattern']" class="invalid-feedback">
+            Campo invalido, máximo 500 caracteres.
+          </div>
+        </div>
+      </div>
+
+      <hr>
+      <br>
+
+      <h3>Resultados de aprendizaje asociadas</h3>
+      <button type="button" matTooltip="Asociar Resultados de aprendizaje a la competencia" mat-raised-button color="primary"
+        (click)="viewDialogRda()" class="btn-openRdaDialog"> <span class="btn-color">Agregar</span>
+      </button>
+
+      <br><br>
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="num">
+          <th mat-header-cell *matHeaderCellDef class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"> No.</th>
+          <td mat-cell *matCellDef="let resultados; let i = index" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+            {{ i + 1 }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="nomResultadoAprendizaje">
+          <th mat-header-cell *matHeaderCellDef class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">Resultado
+            Aprendizaje</th>
+          <td mat-cell *matCellDef="let resultados" class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+            {{resultados.nomResultadoAprendizaje}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">Acciones</th>
+          <td mat-cell *matCellDef="let resultados" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+
+            <button class="btn-removeRda" matTooltip="Remover Rda" mat-icon-button (click)="removeRda(resultados)">
+              <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['num', 'nomResultadoAprendizaje','acciones']; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['num', 'nomResultadoAprendizaje','acciones']"></tr>
+      </table>
+
+      <button type="button" mat-raised-button color="accent"  (click)="goBack()">Cancelar</button> |
+
+      <button type="submit" mat-raised-button color="primary" 
+        [disabled]="editForm.invalid || rdaSeleccionadas.length < 1"> <span class="btn-color">Editar</span></button>
+    </form>
+  </div>
+</div>
+
+<mat-dialog-content>
+  <ng-template #viewRdaDialog>
+    <div class="dialogData">
+      <div>
+        <h2>Resultado de aprendizaje</h2>
+        <mat-icon mat-dialog-close class="cerrar">close</mat-icon>
+      </div>
+      <br>
+      <div>
+        <input type="text" class="form-control" matTooltip="Buscar Rda" (keyup)="filterRda($event)" #input
+          autocomplete="off">
+        <mat-icon color="primary">search</mat-icon>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+          <h4>No.</h4>
+        </div>
+        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+          <h4>Resultado</h4>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+          <h4></h4>
+        </div>
+      </div>
+      <hr>
+      <div class="row" *ngFor="let i of rdaDialog; let x = index">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+          <p>{{ x + 1 }}</p>
+        </div>
+        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+          <p class="truncate" title="{{i.nomResultadoAprendizaje}}">{{ i.nomResultadoAprendizaje}}</p>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+          <button class="btn btn-circle" type="button" matTooliop="Agregar competencia" (click)="addRda(i)">
+            <span class="material-icons">add</span>
+          </button>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </ng-template>
+</mat-dialog-content>

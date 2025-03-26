@@ -1,0 +1,28 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+<h1 mat-dialog-title>Recuperar contraseña</h1>
+<div mat-dialog-content>
+  <div class="content">
+    <form [formGroup]="forgotForm" (ngSubmit)="forgotPwd(forgotForm.value)">
+      <br>
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Correo <b style="color: red;">*</b></label>
+            <input type="email" class="form-control" formControlName="correoUsuario" [ngClass]="{
+                  'is-invalid': forgotForm.get('correoUsuario')?.invalid && (forgotForm.get('correoUsuario')?.touched || forgotForm.get('correoUsuario')?.dirty),
+                  'is-valid': forgotForm.get('correoUsuario')?.valid
+                }">
+          </div>
+        </div>
+      </div>
+      <br>
+      <div mat-dialog-actions align="center">
+        <button type="submit" mat-raised-button color="primary" [disabled]="forgotForm.invalid"><span class="btn-color">Recuperar</span></button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,172 @@
+h1 {
+  font-size: 6.5em;
+  text-align: center;
+}
+
+table {
+  margin-bottom: 134px;
+}
+
+.img-cesge {
+  width: 600px;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-acceder {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 30%;
+  height: 50px;
+  font-size: 1.5em;
+  border-radius: 5px;
+  border: 1px solid #000;
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+.nav {
+  min-height: 85px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.mat-toolbar {
+  height: 64px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 85px;
+  height: 85px;
+  max-width: 80%;
+  user-select: none;
+  max-height: 80%;
+  object-fit: contain;
+}
+
+.color-span {
+  color: #ffffff;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.logo-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sra {
+  flex: 1;
+  user-select: none;
+  color: #ffffff;
+}
+
+button {
+  cursor: pointer;
+
+}
+
+.btn {
+  cursor: pointer;
+  position: relative;
+  padding: 10px 10px;
+  background: #39A900;
+  font-size: 20px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  transition: all 1s;
+
+  &:after,
+  &:before {
+    content: " ";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    border: 0px solid #fff;
+    transition: all 1s;
+  }
+
+  &:after {
+    top: -1px;
+    left: -1px;
+    border-top: 5px solid black;
+    border-left: 5px solid black;
+  }
+
+  &:before {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 5px solid black;
+    border-right: 5px solid black;
+  }
+
+  &:hover {
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+
+    &:before,
+    &:after {
+
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.btn-5 {
+  border: 0 solid;
+  box-shadow: inset 0 0 20px #39A900;
+  outline: 1px solid;
+  outline-color: #39A900;
+  outline-offset: 0px;
+  text-shadow: none;
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+  background-color: #39A900;
+}
+
+.btn-5:hover {
+  border: 1 solid;
+  box-shadow: inset 0 0 20px rgba(171, 247, 162, 0.5),
+    0 0 20px rgb(142, 243, 96);
+  outline-color: #226600;
+  outline-offset: 15px;
+  text-shadow: 1px 1px 2px #2be225;
+}
+
+br {
+  user-select: none;
+}
+
+@media (min-width: 993px) and (max-width: 1200px) {
+  .img-cesge {
+    margin-left: 40px;
+  }
+}
+
+
+@media (max-width: 992px) {
+  .img-cesge {
+      width: 100%; /* La imagen ocupará todo el ancho disponible */
+      height: auto; /* La altura se ajustará proporcionalmente */
+  }
+}
+

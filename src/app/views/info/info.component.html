@@ -1,0 +1,208 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner class="green-spinner"></mat-spinner>
+  </div>
+</div>
+
+<app-navigation />
+@if ( !welcome ){
+
+<div class="container">
+  <br>
+  <h1>Programación de los instructores</h1>
+  <br>
+  <div class="container">
+    <input type="text" class="form-control" (keyup)="filterInstructor($event)" placeholder="Filtrar instructor" #input
+      autocomplete="off">
+    <br>
+    <div class="legend">
+      <div class="legend-item">
+        <span class="dot dot-green"></span>
+        <span>300 o menos aprendices</span>
+      </div>
+      <div class="legend-item">
+        <span class="dot dot-red"></span>
+        <span>Más de 300 aprendices</span>
+      </div>
+      <div class="legend-item">
+        <span class="dot dot-orange"></span>
+        <span>No hay aprendices</span>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="card-container">
+    <div *ngFor="let instructor of programacion; let i = index">
+      <mat-card [ngClass]="{
+      'card-green': programacion[i]?.cardData?.totalAprendices <= 300, 
+      'card-red': programacion[i]?.cardData?.totalAprendices > 300,
+      'card-orange': programacion[i]?.cardData?.totalAprendices == 0
+      }" class="card">
+        <mat-card-header>
+          <mat-card-title matTooltip="{{instructor.instructor[0]}}" class="mat-card-title">{{ instructor.instructor[0]
+            }}</mat-card-title>
+          <mat-card-subtitle>Instructor - {{instructor.instructor[1]}}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <table>
+            <tr class="tr-header">
+              <th></th>
+              <th class="header-num">Asignado</th>
+              <th class="header-num">N° Aprendices</th>
+            </tr>
+            <tr>
+              <td matTooltip="Fichas como instructor técnico">Fichas:</td>
+              <td class="align-data-center">{{ programacion[i]?.cardData?.numFichas }}</td>
+              <td class="align-data-center">{{ programacion[i]?.cardData?.aprendicesFichas }}</td>
+            </tr>
+            <tr>
+              <td matTooltip="Competencias/transversales">Competencias:</td>
+              <td class="align-data-center">{{ programacion[i]?.cardData?.numCompetencias }}</td>
+              <td class="align-data-center">{{ programacion[i]?.cardData?.aprendicesCompetencias }}</td>
+            </tr>
+            <tr>
+              <td>TOTAL:</td>
+              <td></td>
+              <td [ngClass]="{
+              'td-total-green': programacion[i]?.cardData?.totalAprendices <= 300, 
+              'td-total-red': programacion[i]?.cardData?.totalAprendices > 300,
+              'td-total-orange': programacion[i]?.cardData?.totalAprendices == 0
+              }" class="align-data-center">
+                <strong>{{ programacion[i]?.cardData?.totalAprendices }}</strong>
+              </td>
+            </tr>
+          </table>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button matTooltip="Ver fichas asignadas al instructor"
+            [disabled]="programacion[i]?.fichas.length < 1" (click)="openDialogFichas(programacion[i]?.fichas)">Ver
+            fichas</button>
+          <button mat-button matTooltip="Ver competencias asignadas al instructor"
+            [disabled]="programacion[i]?.competencias.length < 1"
+            (click)="openDialogCompetencias(programacion[i]?.competencias)">Ver competencias</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+} @else {
+
+<div class="welcome-container">
+  <div class="welcome">
+    <img src="../../../assets/img/logo_sena-verde.png" alt="Logo SENA" class="logo-sena">
+    <h1>Bienvenido a la plataforma SRA</h1>
+    <h4>Dirijase al modulo <strong>Instructor</strong> para poder registrar un docente.</h4>
+  </div>
+</div>
+
+}
+
+<ng-template #dialogFichas>
+  <div class="dialogData">
+    <div class="dialog-header">
+      <h2>Fichas</h2>
+      <mat-icon mat-dialog-close class="cerrar">close</mat-icon>
+    </div>
+    <br>
+    <div class="input-icon-container">
+      <input type="text" class="form-control" (keyup)="filterFichas($event)" placeholder="Filtrar fichas" #input
+        autocomplete="off">
+      <mat-icon color="primary">search</mat-icon>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 align-data-center">
+        <h4>No.</h4>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+        <h4>N° ficha</h4>
+      </div>
+      <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+        <h4>Programa</h4>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 align-data-center">
+        <h4>Fecha de inicio</h4>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 align-data-center">
+        <h4>Fecha de final</h4>
+      </div>
+    </div>
+    <hr>
+    <div *ngFor="let ficha of dataDialogFichas; let i = index">
+      <div class="row">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 align-data-center">
+          <p>{{ i + 1 }}</p>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <p>{{ ficha.numeroFicha }}</p>
+        </div>
+        <div matTooltip="{{ ficha.nombrePrograma }}" class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+          <p class="dialog-data-truncate">{{ ficha.nombrePrograma }}</p>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 align-data-center">
+          <p>{{ ficha.fechaIniLectiva }}</p>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 align-data-center">
+          <p>{{ ficha.fechaFinFormacion }}</p>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #dialogCompetencias>
+  <div class="dialogData">
+    <div class="dialog-header">
+      <h2>Competencias</h2>
+      <mat-icon mat-dialog-close class="cerrar">close</mat-icon>
+    </div>
+    <br>
+    <div class="input-icon-container">
+      <input type="text" class="form-control" (keyup)="filterCompetencias($event)" placeholder="Filtrar competencias"
+        #input autocomplete="off">
+      <mat-icon color="primary">search</mat-icon>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+        <h4>No.</h4>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+        <h4>N° ficha</h4>
+      </div>
+      <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+        <h4>Competencia</h4>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 align-data-center">
+        <h4>Fecha de inicio</h4>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 align-data-center">
+        <h4>Fecha de final</h4>
+      </div>
+    </div>
+    <hr>
+    <div *ngFor="let competencia of dataDialogCompetencias; let i = index">
+      <div class="row">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+          <p>{{ i + 1 }}</p>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+          <p>{{ competencia.ficha }}</p>
+        </div>
+        <div matTooltip="{{ competencia.nombreCompetencia }}" class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+          <p class="dialog-data-truncate">{{ competencia.nombreCompetencia }}</p>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 align-data-center">
+          <p>{{ competencia.fechaIniCompetencia }}</p>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 align-data-center">
+          <p>{{ competencia.fechaFinCompetencia }}</p>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</ng-template>

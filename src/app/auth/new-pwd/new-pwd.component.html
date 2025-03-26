@@ -1,0 +1,50 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <a (click)="goBack()" title="Volver atrás" class="back-link">
+      <mat-icon class="flecha-atras">arrow_back</mat-icon>
+    </a>
+    <div class="fadeIn first">
+      <img src="../../../assets/img/logo_sena-verde.png" id="icon" alt="Sena logo" />
+    </div>
+    <br>
+
+    <form [formGroup]="newPwdForm" (ngSubmit)="onNewPwd()">
+      <div class="fadeIn second">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Nueva contraseña</mat-label>
+            <input formControlName="contrasenaUsuario" matInput [ngClass]="{
+                    'is-invalid': newPwdForm.get('contrasenaUsuario')?.invalid,
+                    'is-valid': newPwdForm.get('contrasenaUsuario')?.valid
+                  }" [type]="showPassword ? 'text' : 'password'">
+            <mat-icon matSuffix (click)="togglePasswordVisibility()">
+              {{ showPassword ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+          </mat-form-field><br>
+        </p>
+      </div>
+      <div class="fadeIn third">
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Repite la contraseña</mat-label>
+            <input formControlName="repetirContrasena" matInput [ngClass]="{
+                    'is-invalid': newPwdForm.get('repetirContrasena')?.invalid,
+                    'is-valid': newPwdForm.get('repetirContrasena')?.valid
+                  }" [type]="showPassword ? 'text' : 'password'">
+            <mat-icon matSuffix (click)="togglePasswordVisibility()" [color]="'primary'">
+              {{ showPassword ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+          </mat-form-field><br>
+        </p>
+      </div>
+      <button type="submit" color="primary" class="fadeIn fourth" mat-raised-button
+        [disabled]="newPwdForm.invalid"><span class="btn-color">Cambiar
+        contraseña</span></button><br><br>
+    </form>
+  </div>
+</div>

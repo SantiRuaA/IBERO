@@ -1,0 +1,28 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner class="green-spinner"></mat-spinner>  
+  </div>
+</div>
+
+<app-navigation/>
+
+<div class="container">
+  <br>
+  <h2>Ver Saber</h2>
+  <br>
+  <div class="container">
+    <form [formGroup]="viewForm">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="form-group">
+              <label for=""> Nombre Saber</label>
+              <textarea type="text" class="form-control" formControlName="nomResultadoAprendizaje">
+              </textarea>
+            </div>
+          </div>
+        </div>
+        <br>
+        <button type="button" mat-raised-button color="accent" (click)="goBack()">Volver</button>
+      </form>
+  </div>
+</div>

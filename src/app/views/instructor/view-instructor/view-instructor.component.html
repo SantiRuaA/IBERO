@@ -1,0 +1,70 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner class="green-spinner"></mat-spinner>
+  </div>
+</div>
+
+<app-navigation/>
+
+<div class="container">
+  <br>
+  <h2>Ver Tutor </h2>
+  <br>
+  <div class="container">
+    <form [formGroup]="viewForm">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="idTipoDocumento">Tipo de documento <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="idTipoDocumento" readonly>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">N° documento<b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="documentoInstructor" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Nombre <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="nombreInstructor" readonly>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Apellidos <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="apellidoInstructor" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Teléfono <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="telefonoInstructor" readonly>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Correo <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="correoInstructor" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="form-group">
+            <label for="">Tipo de Tutor <b style="color: red;">*</b></label>
+            <input type="text" class="form-control" formControlName="idTipoInstructor" readonly>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <button type="button" mat-raised-button color="accent" (click)="goBack()">Volver</button>
+    </form>
+  </div>
+</div>

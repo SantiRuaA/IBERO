@@ -1,0 +1,29 @@
+<app-navigation/>
+<div class="container">
+  <br>
+  <h2>Editar Saber</h2>
+  <br>
+  <div class="container">
+    <form [formGroup]="editForm" (ngSubmit)="postForm(editForm.value)">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <div class="form-group">
+            <label for="">Nombre del Saber <b style="color: red;">*</b></label>
+            <textarea type="text" class="form-control" formControlName="nomResultadoAprendizaje" [ngClass]="{
+              'is-invalid': editForm.get('nomResultadoAprendizaje')?.invalid && (editForm.get('nomResultadoAprendizaje')?.touched || editForm.get('nomResultadoAprendizaje')?.dirty),
+              'is-valid': editForm.get('nomResultadoAprendizaje')?.valid
+            }"> </textarea>
+            <div *ngIf="editForm.get('nomResultadoAprendizaje')?.errors?.['required']" class="invalid-feedback">
+              Este campo es obligatorio.
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <button type="button" mat-raised-button color="accent" (click)="goBack()">Cancelar</button> |
+      
+      <button type="submit" mat-raised-button class="btn-guardar" color="primary" [disabled]="editForm.invalid"><span class="btn-color">Editar</span></button>
+    </form>
+  </div>
+</div>

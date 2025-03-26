@@ -1,0 +1,105 @@
+<div class="spinner-overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner class="green-spinner"></mat-spinner>
+  </div>
+</div>
+
+<app-navigation/>
+<div class="container">
+  <br>
+  <h1>Lista de programas</h1>
+  <br>
+  <div class="create-button-container">
+    <div class="row">
+      <div class="col">
+        <button matTooltip="Crear Registro" mat-raised-button class="btn-nuevo" color="primary" (click)="newPrograma()">
+          <mat-icon class="white-text">add</mat-icon> <span class="white-text">Nuevo</span>
+        </button>
+      </div>
+      <div class="col">
+        <div class="d-flex justify-content-between">
+          <div class="button-container">
+            <button mat-menu-item class="icon-text pdf-button" matTooltip="Descargar Pdf" (click)="generatePDF()">
+              <mat-icon [ngStyle]="{'color': '#FF0000'}">picture_as_pdf</mat-icon>
+              <span class="icon-text">PDF</span>
+            </button>
+        
+            <button mat-menu-item class="icon-text excel-button" matTooltip="Descargar Excel" (click)="generateExcel()">
+              <mat-icon [ngStyle]="{'color': '#37D12B'}">description</mat-icon>
+              <span class="icon-text">EXCEL</span>
+            </button>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Buscar</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ej: Análisis" #input>
+            <button mat-button matSuffix disabled>
+              <mat-icon color="primary">search</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mat-elevation-z8 table-container">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="posicion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element; let i = index" class="max-width-cell">{{ i + 1 }}</td>
+      </ng-container>
+      
+      <ng-container matColumnDef="codigoPrograma">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Código</th>
+        <td mat-cell *matCellDef="let element" class="max-width-cell">{{element.codigoPrograma}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nomPrograma">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Programa</th>
+        <td mat-cell *matCellDef="let element" class="max-width-cell">{{element.nomPrograma}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nomNivelFormacion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nivel de formación</th>
+        <td mat-cell *matCellDef="let element" class="max-width-cell">{{element.nomNivelFormacion }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="versionPrograma">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Version</th>
+        <td mat-cell *matCellDef="let element" class="max-width-cell">{{element.versionPrograma}}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button [matMenuTriggerFor]="actionsMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #actionsMenu="matMenu">
+            <button mat-menu-item (click)="view(element.idPrograma)">
+              <mat-icon [ngStyle]="{'color': '#AED581'}">visibility</mat-icon>
+              <span>Ver</span>
+            </button>
+            <button mat-menu-item (click)="edit(element.idPrograma)">
+              <mat-icon [ngStyle]="{'color': '#1A237E'}">edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item (click)="deletePrograma(element.idPrograma)">
+              <mat-icon [ngStyle]="{'color': 'red'}">delete</mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['posicion', 'codigoPrograma', 'nomPrograma', 'nomNivelFormacion', 'versionPrograma', 'acciones']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['posicion', 'codigoPrograma', 'nomPrograma', 'nomNivelFormacion', 'versionPrograma', 'acciones']"></tr>
+    </table>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+  <br>
+  <div *ngIf="dataSource.filteredData.length === 0" class="no-results-message" style="text-align: center;">
+    <strong>NO SE ENCONTRARON RESULTADOS.</strong>
+  </div>
+</div>
