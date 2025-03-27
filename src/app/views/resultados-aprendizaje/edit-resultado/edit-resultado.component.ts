@@ -79,7 +79,7 @@ export class EditResultadoComponent implements OnInit, OnDestroy, HasUnsavedChan
   postForm(id: any) {
     Swal.fire({
       icon: 'question',
-      title: '¿Estás seguro de que deseas modificar este resultado de aprendizaje?',
+      title: '¿Estás seguro de que deseas modificar este saber?',
       showCancelButton: true,
       showCloseButton: true,
       allowOutsideClick: false,
@@ -97,8 +97,8 @@ export class EditResultadoComponent implements OnInit, OnDestroy, HasUnsavedChan
               this.router.navigate(['/resultados-aprendizaje']);
               Swal.fire({
                 icon: 'success',
-                title: 'Resultado de aprendizaje modificado',
-                text: 'El resultado de aprendizaje ha sido modificado exitosamente.',
+                title: 'Saber modificado',
+                text: 'El saber ha sido modificado exitosamente.',
                 toast: true,
                 showConfirmButton: false,
                 timer: 5000,

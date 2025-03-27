@@ -109,7 +109,7 @@ export class ListResultadosComponent implements OnInit, OnDestroy {
   deleteResultado(id: any) {
     Swal.fire({
       icon: 'question',
-      title: '¿Estás seguro de que deseas eliminar este resultado de aprendizaje?',
+      title: '¿Estás seguro de que deseas eliminar este saber?',
       showDenyButton: true,
       showCancelButton: true,
       showConfirmButton: false,
@@ -124,7 +124,7 @@ export class ListResultadosComponent implements OnInit, OnDestroy {
           if (!data) {
             Swal.fire({
               icon: 'warning',
-              title: 'El resultado de aprendizaje está vinculado a una o más competencias. Si se elimina, se removera el resultado de aprendizaje de las competencias asociados.',
+              title: 'El saber está vinculado a una o más competencias. Si se elimina, se removera el resultado de aprendizaje de las competencias asociados.',
               text: '¿Estás seguro de que deseas eliminar este resultado de aprendizaje?',
               showDenyButton: true,
               showCancelButton: true,
@@ -142,8 +142,8 @@ export class ListResultadosComponent implements OnInit, OnDestroy {
                       this.dataSource.data = this.resultados;
                       Swal.fire({
                         icon: 'success',
-                        title: 'Resultado de aprendizaje eliminado',
-                        text: 'El resultado de aprendizaje ha sido eliminado exitosamente.',
+                        title: 'Saber eliminado',
+                        text: 'El saber ha sido eliminado exitosamente.',
                         toast: true,
                         showConfirmButton: false,
                         timer: 5000,
@@ -181,8 +181,8 @@ export class ListResultadosComponent implements OnInit, OnDestroy {
                   this.dataSource.data = this.resultados;
                   Swal.fire({
                     icon: 'success',
-                    title: 'Resultado de aprendizaje eliminado',
-                    text: 'El resultado de aprendizaje ha sido eliminado exitosamente.',
+                    title: 'Saber eliminado',
+                    text: 'El saber ha sido eliminado exitosamente.',
                     toast: true,
                     showConfirmButton: false,
                     timer: 5000,

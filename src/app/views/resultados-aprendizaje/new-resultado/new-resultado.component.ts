@@ -54,7 +54,7 @@ export class NewResultadoComponent implements OnDestroy, HasUnsavedChanges {
   postForm(form: any) {
     Swal.fire({
       icon: 'question',
-      title: '¿Estás seguro de que deseas crear este resultado de aprendizaje?',
+      title: '¿Estás seguro de que deseas crear este saber?',
       showCancelButton: true,
       showCloseButton: true,
       allowOutsideClick: false,
@@ -74,8 +74,8 @@ export class NewResultadoComponent implements OnDestroy, HasUnsavedChanges {
             this.router.navigate(['/resultados-aprendizaje']);
             Swal.fire({
               icon: 'success',
-              title: 'Resultado de aprendizaje creado',
-              text: 'El resultado de aprendizaje ha sido creado exitosamente.',
+              title: 'Saber creado',
+              text: 'El saber ha sido creado exitosamente.',
               toast: true,
               showConfirmButton: false,
               timer: 5000,

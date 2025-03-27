@@ -72,7 +72,7 @@ export class NewInstructorComponent implements OnInit, OnDestroy, HasUnsavedChan
   postForm(form: any) {
     Swal.fire({
       icon: 'question',
-      title: '¿Estás seguro de que deseas crear este instructor?',
+      title: '¿Estás seguro de que deseas crear este tutor?',
       showCancelButton: true,
       showCloseButton: true,
       allowOutsideClick: false,
@@ -90,7 +90,7 @@ export class NewInstructorComponent implements OnInit, OnDestroy, HasUnsavedChan
             Swal.fire({
               icon: 'success',
               title: 'Instructor creado',
-              text: 'El instructor ha sido creado exitosamente.',
+              text: 'El tutor ha sido creado exitosamente.',
               toast: true,
               showConfirmButton: false,
               timer: 5000,

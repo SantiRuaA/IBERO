@@ -66,7 +66,7 @@ export class ListInstructoresComponent implements OnInit, OnDestroy {
       if (this.dataSource.data.length < 1) {
         Swal.fire({
           title: 'No hay instructores registrados',
-          text: 'No se encontraron instructores en el sistema.',
+          text: 'No se encontraron tutores en el sistema.',
           icon: 'info',
           toast: true,
           showConfirmButton: false,
@@ -119,7 +119,7 @@ export class ListInstructoresComponent implements OnInit, OnDestroy {
   deleteInstructor(id: any): void {
     Swal.fire({
       icon: 'question',
-      title: '¿Estás seguro de que deseas eliminar este instructor?',
+      title: '¿Estás seguro de que deseas eliminar este tutor?',
       showDenyButton: true,
       showCancelButton: true,
       showConfirmButton: false,
@@ -134,8 +134,8 @@ export class ListInstructoresComponent implements OnInit, OnDestroy {
           if (!data) {
             Swal.fire({
               icon: 'warning',
-              title: 'Este instructor está asignado a una o más fichas como instructor técnico y/o a competencias. Si se elimina, estos campos perderán su instructor asignado.',
-              text: '¿Estás seguro de que deseas eliminar este instructor?',
+              title: 'Este tutor está asignado a una o más fichas como instructor técnico y/o a competencias. Si se elimina, estos campos perderán su instructor asignado.',
+              text: '¿Estás seguro de que deseas eliminar este tutor?',
               showDenyButton: true,
               showCancelButton: true,
               showConfirmButton: false,
@@ -153,7 +153,7 @@ export class ListInstructoresComponent implements OnInit, OnDestroy {
                       Swal.fire({
                         icon: 'success',
                         title: 'Instructor eliminado',
-                        text: 'El instructor ha sido eliminado exitosamente.',
+                        text: 'El tutor ha sido eliminado exitosamente.',
                         toast: true,
                         showConfirmButton: false,
                         timer: 5000,
@@ -191,7 +191,7 @@ export class ListInstructoresComponent implements OnInit, OnDestroy {
                   this.dataSource.data = this.instructores;
                   Swal.fire({
                     icon: 'success',
-                    title: 'Instructor eliminado',
+                    title: 'tutor eliminado',
                     text: 'El instructor ha sido eliminado exitosamente.',
                     toast: true,
                     showConfirmButton: false,

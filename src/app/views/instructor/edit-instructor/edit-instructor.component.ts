@@ -103,7 +103,7 @@ export class EditInstructorComponent implements OnInit, OnDestroy, HasUnsavedCha
   postForm(id: any) {
     Swal.fire({
       icon: 'question',
-      title: '¿Estás seguro de que deseas modificar este instructor?',
+      title: '¿Estás seguro de que deseas modificar este tutor?',
       showCancelButton: true,
       showCloseButton: true,
       allowOutsideClick: false,
@@ -122,7 +122,7 @@ export class EditInstructorComponent implements OnInit, OnDestroy, HasUnsavedCha
               Swal.fire({
                 icon: 'success',
                 title: 'Instructor modificado',
-                text: 'El instructor ha sido modificado exitosamente.',
+                text: 'El tutor ha sido modificado exitosamente.',
                 toast: true,
                 showConfirmButton: false,
                 timer: 5000,
