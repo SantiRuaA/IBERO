@@ -264,7 +264,7 @@ export class ListProgramaComponent implements OnInit, OnDestroy {
 
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet([]);
 
-    XLSX.utils.sheet_add_aoa(worksheet, [['Informe de Programas - Aplicativo SRA']], { origin: 'A1' });
+    XLSX.utils.sheet_add_aoa(worksheet, [['Informe de Programas - Aplicativo IBERO']], { origin: 'A1' });
 
     XLSX.utils.sheet_add_json(worksheet, dataToExport, { origin: 'A3' });
 
@@ -295,14 +295,14 @@ export class ListProgramaComponent implements OnInit, OnDestroy {
     const doc = new jsPDF();
 
     doc.setFontSize(18);
-    doc.text('Informe de Programas - Aplicativo SRA', 14, 15);
+    doc.text('Informe de Programas - Aplicativo IBERO', 14, 15);
 
     doc.autoTable({
       startY: 30,
       head: [['Programa', 'Codigo del programa', 'Version del programa', 'Red de conocimiento', 'Proyecto', 'Nivel de formacion', 'Competencias']],
       body: dataToExport,
       headStyles: {
-        fillColor: [57, 169, 0], // Color verde en formato RGB para los encabezados
+        fillColor: [41, 128, 185], // Color verde en formato RGB para los encabezados
         textColor: [255, 255, 255], // Color del texto en formato RGB para los encabezados
       },
     } as unknown as typeof AutoTableOptions); // Specify the type for options parameter

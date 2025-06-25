@@ -250,20 +250,20 @@ export class ListInstructoresComponent implements OnInit, OnDestroy {
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet([]);
 
     // Agregar el título en la celda A1
-    XLSX.utils.sheet_add_aoa(worksheet, [['Informe de Instructores - Aplicativo SRA']], { origin: 'A1' });
+    XLSX.utils.sheet_add_aoa(worksheet, [['Informe de Tutores - Aplicativo IBERO']], { origin: 'A1' });
 
 
     XLSX.utils.sheet_add_json(worksheet, dataToExport, { origin: 'A3' });
 
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Instructores');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Tutores');
 
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     const excelFileURL = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = excelFileURL;
-    link.download = 'instructores.xlsx';
+    link.download = 'tutores.xlsx';
     link.click();
   }
 
@@ -281,19 +281,19 @@ export class ListInstructoresComponent implements OnInit, OnDestroy {
 
     const doc = new jsPDF();
     doc.setFontSize(18);
-    doc.text('Informes de Instructores - Aplicativo SRA', 14, 15);
+    doc.text('Informes de Tutores - Aplicativo IBERO', 14, 15);
 
     doc.autoTable({
       startY: 30,
       head: [['Nombre', 'Apellido', 'Documento', 'Tipo documento', 'Teléfono', 'Correo electrónico', 'Tipo instructor']],
       body: dataToExport,
       headStyles: {
-        fillColor: [57, 169, 0], // Color verde en formato RGB para los encabezados
+        fillColor: [41, 128, 185], // Color azul en formato RGB para los encabezados
         textColor: [255, 255, 255], // Color del texto en formato RGB para los encabezados
       },
     } as unknown as typeof AutoTableOptions); // Specify the type for options parameter
 
-    doc.save('instructores.pdf');
+    doc.save('tutores.pdf');
   }
 
   removeAccents(cadena: string): string {

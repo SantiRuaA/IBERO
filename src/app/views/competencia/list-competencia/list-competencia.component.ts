@@ -280,19 +280,19 @@ export class ListCompetenciaComponent implements OnInit, OnDestroy {
 
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet([]);
 
-    XLSX.utils.sheet_add_aoa(worksheet, [['Informe de Competencias - Aplicativo SRA']], { origin: 'A1' });
+    XLSX.utils.sheet_add_aoa(worksheet, [['Informe de Materias - Aplicativo IBERO']], { origin: 'A1' });
 
     XLSX.utils.sheet_add_json(worksheet, dataToExport, { origin: 'A3' });
 
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Competencias');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Materias');
 
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     const excelFileURL = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = excelFileURL;
-    link.download = 'Competencias.xlsx';
+    link.download = 'Materias.xlsx';
     link.click();
   }
 
@@ -309,19 +309,19 @@ export class ListCompetenciaComponent implements OnInit, OnDestroy {
     const doc = new jsPDF();
 
     doc.setFontSize(18);
-    doc.text('Informe de Competencias - Aplicativo SRA', 14, 15);
+    doc.text('Informe de Materias - Aplicativo IBERO', 14, 15);
 
     doc.autoTable({
       startY: 30,
       head: [['Competencia', 'Norma ', 'Codigo de la norma ', 'RAP ']],
       body: dataToExport,
       headStyles: {
-        fillColor: [57, 169, 0],
+        fillColor: [41, 128, 185],
         textColor: [255, 255, 255],
       },
     } as unknown as typeof AutoTableOptions);
 
-    doc.save('Competencias.pdf');
+    doc.save('Materias.pdf');
   }
 
 

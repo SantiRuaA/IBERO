@@ -225,7 +225,7 @@ export class ListResultadosComponent implements OnInit, OnDestroy {
 
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet([]);
 
-    XLSX.utils.sheet_add_aoa(worksheet, [['Informes de Resultados de aprendizaje - Aplicativo SRA']], { origin: 'A1' });
+    XLSX.utils.sheet_add_aoa(worksheet, [['Informes de Saberes - Aplicativo IBERO']], { origin: 'A1' });
 
     XLSX.utils.sheet_add_json(worksheet, dataToExport, { origin: 'A3' });
 
@@ -237,7 +237,7 @@ export class ListResultadosComponent implements OnInit, OnDestroy {
     const excelFileURL = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = excelFileURL;
-    link.download = 'RAP.xlsx';
+    link.download = 'saber.xlsx';
     link.click();
   }
 
@@ -251,19 +251,19 @@ export class ListResultadosComponent implements OnInit, OnDestroy {
     const doc = new jsPDF();
 
     doc.setFontSize(18);
-    doc.text('Informes de Resultados de aprendizaje - Aplicativo SRA', 14, 22);
+    doc.text('Informes de Saberes - Aplicativo IBERO', 14, 22);
 
     doc.autoTable({
       startY: 30,
-      head: [['Resultado de aprendizaje']],
+      head: [['Saberes']],
       body: dataToExport,
       headStyles: {
-        fillColor: [57, 169, 0], // Color verde en formato RGB para los encabezados
+        fillColor: [41, 128, 185], // Color verde en formato RGB para los encabezados
         textColor: [255, 255, 255], // Color del texto en formato RGB para los encabezados
       },
     } as unknown as typeof AutoTableOptions); // Specify the type for options parameter
 
-    doc.save('RAP.pdf');
+    doc.save('saber.pdf');
   }
 
   removeAccents(cadena: string): string {
